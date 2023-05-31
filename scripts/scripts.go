@@ -1,9 +1,7 @@
 package scripts
 
 const (
-	// 获取到任务时就删除任务
-	// ZRANGEBYSCORE KEYS[1] 0 ARGV[1] LIMIT 0 1
-	GetTaskLua = `
+	GetTaskLua = `--KEYS 
 		local queueKey = KEYS[1]  
 		local taskScore = ARGV[1]  
 		local result={}
@@ -17,9 +15,7 @@ const (
 		return result
 	`
 
-	// ZADD KEYS[1] AGRV[2] KEYS[2]
-	// SET KEYS[2] ARGV[1]
-	AddTaskLua = `  
+	AddTaskLua = `--KEYS
 		local queueKey = KEYS[1]
 		local taskKey = KEYS[2]
 		local taskData = ARGV[1]
@@ -27,4 +23,6 @@ const (
 		redis.call("ZADD", queueKey, taskScore, taskKey)	
 		redis.call("SET", taskKey, taskData)
 	`
+
+
 )

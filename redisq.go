@@ -1,7 +1,7 @@
 package redisq
 
 import (
-	"github.com/lixvyang/redisq/constant"
+	"github.com/lixvyang/redisq/common/constant"
 	"github.com/lixvyang/redisq/scripts"
 	"github.com/redis/go-redis/v9"
 )
@@ -11,6 +11,7 @@ type Redisq struct {
 	RedisOpt       *redis.Options
 	MaxConcurrency uint64
 	MaxRetry       uint64
+	handleFunc     func() error
 
 	rdb           *redis.Client
 	addTaskScript *redis.Script
@@ -38,10 +39,10 @@ func (rq *Redisq) initRedis() {
 	rq.rdb = redis.NewClient(rq.RedisOpt)
 }
 
-func (rq *Redisq) AddTask() {
-	
+func (rq *Redisq) AddTask(data []byte) {
+
 }
 
-func (rq *Redisq) GetTask() {
-
+func (rq *Redisq) GetTask() []byte {
+	return []byte{}
 }

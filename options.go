@@ -1,6 +1,8 @@
 package redisq
 
-import "github.com/redis/go-redis/v9"
+import (
+	"github.com/redis/go-redis/v9"
+)
 
 type OptionFunc func(*Redisq)
 
@@ -20,6 +22,12 @@ func newFuncOption(f func(*Redisq)) IOption {
 	return &funcOption{
 		f: f,
 	}
+}
+
+func WithHandleFunc(f func() error) IOption {
+	return newFuncOption(func(r *Redisq) {
+		r.handleFunc = f
+	})
 }
 
 func WithMaxConcurrency(c uint64) IOption {
